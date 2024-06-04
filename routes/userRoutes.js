@@ -3,7 +3,8 @@ const express = require('express');
 const router = express.Router();
 const bcrypt = require('bcrypt');
 const User = require('../models/User');
-
+//hey
+const test=2;
 // Route for user login with phone number and password
 router.post('/login', async (req, res) => {
   const { phoneNumber, password } = req.body;
