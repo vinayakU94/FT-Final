@@ -1,5 +1,6 @@
-const express = require('express');
-const { MongoClient, ServerApiVersion } = require('mongodb');
+import express, { json } from 'express';
+import { MongoClient, ServerApiVersion } from 'mongodb';
+import { checkNullUndefined } from './utils/tools.js';
 
 const app = express();
 const port = process.env.PORT || 3000;
@@ -16,6 +17,9 @@ const client = new MongoClient(uri, {
   }
 });
 
+
+
+
 // Connect to MongoDB and start the server
 async function startServer() {
   try {
@@ -23,12 +27,17 @@ async function startServer() {
     await client.connect();
 
     // Use the MongoDB client in your routes
-    app.use(express.json());
+    app.use(json());
 
     // Routes for user sign-up and login
     app.post('/signup', async (req, res) => {
       const { name, phoneNumber, email, city } = req.body;
-
+      console.log(req.body);
+      // console.log(name+ " " + phoneNumber + " " + email + " "+ city)
+      if(checkNullUndefined(name) || checkNullUndefined(phoneNumber) || checkNullUndefined(email) || checkNullUndefined(city)){
+        return res.status(400).json({error: "invalid credentials"})
+      }
+      
       try {
         // Here you would insert the user data into MongoDB using the client
         const db = client.db("myDatabase");
@@ -57,7 +66,8 @@ async function startServer() {
 
         // Add authentication logic here
 
-        res.status(200).json({ message: 'User logged in successfully' });
+        res.status(200).json({ message: 'User logged in successfully', body:user });
+
       } catch (error) {
         console.error('Error logging in user:', error);
         res.status(500).json({ error: 'Internal server error' });
