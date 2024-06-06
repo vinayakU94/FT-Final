@@ -1,13 +1,13 @@
 // routes/auth.js
-const express = require('express');
-const User = require('../models/User');
-const router = express.Router();
+import { Router } from 'express';
+import User, { findOne } from '../models/User';
+const router = Router();
 
 router.post('/signup', async (req, res) => {
-  const { name, phoneNumber, email, city } = req.body;
+  const { name, phoneNumber, email, city, password } = req.body;
 
   try {
-    const existingUser = await User.findOne({ phoneNumber });
+    const existingUser = await findOne({ phoneNumber });
 
     if (existingUser) {
       return res.status(400).json({ error: 'User with this phone number already exists' });
@@ -22,4 +22,4 @@ router.post('/signup', async (req, res) => {
   }
 });
 
-module.exports = router;
+export default router;

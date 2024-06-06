@@ -1,7 +1,7 @@
-import express, { json } from 'express';
+import express, { json, response } from 'express';
 import { MongoClient, ServerApiVersion } from 'mongodb';
 import { checkNullUndefined } from './utils/tools.js';
-
+import bcrypt from "bcrypt"
 const app = express();
 const port = process.env.PORT || 3000;
 
@@ -31,10 +31,10 @@ async function startServer() {
 
     // Routes for user sign-up and login
     app.post('/signup', async (req, res) => {
-      const { name, phoneNumber, email, city } = req.body;
+      const { name, phoneNumber, email, city, password } = req.body;
       console.log(req.body);
       // console.log(name+ " " + phoneNumber + " " + email + " "+ city)
-      if(checkNullUndefined(name) || checkNullUndefined(phoneNumber) || checkNullUndefined(email) || checkNullUndefined(city)){
+      if(checkNullUndefined(name) || checkNullUndefined(phoneNumber) || checkNullUndefined(email) || checkNullUndefined(city)|| checkNullUndefined(password)){
         return res.status(400).json({error: "invalid credentials"})
       }
       
@@ -42,7 +42,8 @@ async function startServer() {
         // Here you would insert the user data into MongoDB using the client
         const db = client.db("myDatabase");
         const collection = db.collection("users");
-        await collection.insertOne({ name, phoneNumber, email, city });
+        let passwordcrpted = await bcrypt.hash(password, 10)
+        await collection.insertOne({ name, phoneNumber, email, city , password : passwordcrpted });
 
         res.status(201).json({ message: 'User signed up successfully' });
       } catch (error) {
@@ -52,7 +53,8 @@ async function startServer() {
     });
 
     app.post('/login', async (req, res) => {
-      const { phoneNumber } = req.body;
+      const { phoneNumber, password } = req.body;
+      
 
       try {
         // Here you would find the user in MongoDB using the client and authenticate the user
@@ -64,9 +66,17 @@ async function startServer() {
           return res.status(404).json({ error: 'User not found' });
         }
 
-        // Add authentication logic here
+       
+        bcrypt.compare(req.body.password, user.password, function(err, response) {
+          if (response) {
+            res.status(200).json({ message: 'User logged in successfully', body:user });
+          } else {
+            // response is OutgoingMessage object that server response http request
+            return res.status(400).json({success: false, message: 'passwords do not match'});
+          }
+        });
 
-        res.status(200).json({ message: 'User logged in successfully', body:user });
+        
 
       } catch (error) {
         console.error('Error logging in user:', error);
