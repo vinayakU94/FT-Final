@@ -2,9 +2,17 @@ import express, { json, response } from 'express';
 import { MongoClient, ServerApiVersion } from 'mongodb';
 import { checkNullUndefined } from './src/utils/tools.js';
 import bcrypt from "bcrypt"
+import connectDB from './src/database/index.js';
 const app = express();
+
+app.use(express.json({limit: "16kb"}))
 const port = process.env.PORT || 3000;
 
+
+
+import userRouter from './src/routes/userRoutes.js'
+
+app.use("/users", userRouter)
 // MongoDB connection URI
 const uri = "mongodb+srv://uvinayak7:oRrZcoLEEOtDJqyG@clusterft.mw37dvg.mongodb.net/?retryWrites=true&w=majority&appName=ClusterFT";
 
@@ -16,6 +24,8 @@ const client = new MongoClient(uri, {
     deprecationErrors: true,
   }
 });
+
+
 
 
 
@@ -114,4 +124,13 @@ async function startServer() {
   }
 }
 
-startServer();
+// startServer();
+
+connectDB().then(() => {
+  app.listen(port, () => {
+    console.log(`Server running on port ${port}`);
+  });
+})
+.catch((err) => {
+  console.error('Error connecting to MongoDB:', error);
+})
