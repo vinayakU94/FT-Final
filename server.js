@@ -1,6 +1,6 @@
 import express, { json, response } from 'express';
 import { MongoClient, ServerApiVersion } from 'mongodb';
-import { checkNullUndefined } from './utils/tools.js';
+import { checkNullUndefined } from './src/utils/tools.js';
 import bcrypt from "bcrypt"
 const app = express();
 const port = process.env.PORT || 3000;

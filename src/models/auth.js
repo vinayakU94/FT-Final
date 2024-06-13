@@ -1,6 +1,6 @@
 // routes/auth.js
 import { Router } from 'express';
-import User, { findOne } from '../models/User';
+import User, { findOne } from './User';
 const router = Router();
 
 router.post('/signup', async (req, res) => {
