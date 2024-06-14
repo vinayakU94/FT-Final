@@ -43,4 +43,4 @@ const repairRequestSchema = new Schema(
   }
 );
 
-export default model("RepairRequest", repairRequestSchema);
+export const RepairRequest =  model("RepairRequest", repairRequestSchema);

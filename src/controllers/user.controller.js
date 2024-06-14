@@ -1,12 +1,11 @@
-import {User} from "../models/User.js";
+import {User} from "../models/User.model.js";
 import { checkNullUndefined } from "../utils/tools.js";
 
 import bcrypt from "bcrypt"
 
 const registerUser =  async (req, res) => {
     const { name, phoneNumber, email, city, password } = req.body;
-    // console.log(req.body);
-    // console.log(name+ " " + phoneNumber + " " + email + " "+ city)
+    
     if (checkNullUndefined(name) || checkNullUndefined(phoneNumber) || checkNullUndefined(email) || checkNullUndefined(city) || checkNullUndefined(password)) {
       return res.status(400).json({ error: "invalid credentials" })
     }

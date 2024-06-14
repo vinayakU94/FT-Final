@@ -10,9 +10,16 @@ const port = process.env.PORT || 3000;
 
 
 
-import userRouter from './src/routes/userRoutes.js'
+import userRouter from './src/routes/user.routes.js'
+import categoryRouter from './src/routes/category.routes.js'
 
 app.use("/users", userRouter)
+app.use("/category", categoryRouter)
+
+
+
+
+
 // MongoDB connection URI
 const uri = "mongodb+srv://uvinayak7:oRrZcoLEEOtDJqyG@clusterft.mw37dvg.mongodb.net/?retryWrites=true&w=majority&appName=ClusterFT";
 
