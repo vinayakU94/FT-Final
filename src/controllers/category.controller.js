@@ -84,7 +84,7 @@ const getAllCategory = async (req, res) => {
 
 
 export {
-    addCategory,
-    getAllCategory,
-    getCategory   
+  addCategory,
+  getAllCategory,
+  getCategory
 }

@@ -12,12 +12,13 @@ const port = process.env.PORT || 3000;
 
 import userRouter from './src/routes/user.routes.js'
 import categoryRouter from './src/routes/category.routes.js'
+import productRouter from './src/routes/product.routes.js'
+import repair_requestRouter from './src/routes/repair_request.routes.js'
 
 app.use("/users", userRouter)
 app.use("/category", categoryRouter)
-
-
-
+app.use("/product", productRouter)
+app.use("/repair_request", repair_requestRouter)
 
 
 // MongoDB connection URI
@@ -141,3 +142,4 @@ connectDB().then(() => {
 .catch((err) => {
   console.error('Error connecting to MongoDB:', error);
 })
+// startServer();

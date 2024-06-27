@@ -1,4 +1,3 @@
-
 import { Schema, model } from "mongoose";
 
 const repairRequestSchema = new Schema(
@@ -8,32 +7,32 @@ const repairRequestSchema = new Schema(
       required: true,
       ref: "Category",
     },
-    ProductId: {
+    productId: {
       type: Schema.Types.ObjectId,
       required: true,
       ref: "Product",
     },
-    UserId: {
+    userId: {
       type: Schema.Types.ObjectId,
       required: true,
       ref: "User",
     },
-    DateTime: {
+    dateTime: {
         type: Date,
-        default: Date.now(),
+        default: Date.now,
     },
-    PickupAddress: {
+    pickupAddress: {
         type: String,
         required: true,
     },
-    Image: {
+    image: {
         type: String,
     },
-    Description: {
+    description: {
         type: String,
         required: true,
     },
-    Status: {
+    status: {
         type: String,
         required: true,
     },
@@ -43,4 +42,4 @@ const repairRequestSchema = new Schema(
   }
 );
 
-export const RepairRequest =  model("RepairRequest", repairRequestSchema);
+export const RepairRequest = model("RepairRequest", repairRequestSchema);
