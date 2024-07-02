@@ -35,6 +35,7 @@ const repairRequestSchema = new Schema(
     status: {
         type: String,
         required: true,
+        enum: ["request raised", "repair partner confirmation await", "Confirmed and reay to pick", "waiting for estimate", "Estimate and waiting confirmation", "cancelled by user", "cancelled by FixThis"],
     },
   },
   {
@@ -43,3 +44,16 @@ const repairRequestSchema = new Schema(
 );
 
 export const RepairRequest = model("RepairRequest", repairRequestSchema);
+
+
+/*
+
+request raised
+repair partner confirmation await
+Confirmed and reay to pick 
+picked up and deliver to repair partner 
+waiting for estimate
+Estimate and waiting confirmation
+
+
+*/
