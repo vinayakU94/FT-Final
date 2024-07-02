@@ -36,7 +36,7 @@ const addRepairRequest = async (req, res) => {
 };
 
 const getRepairRequest = async (req, res) => {
-    const { id } = req.params;
+    const { id } = req.body;
 
     try {
         const repairRequest = await RepairRequest.findById(id).populate('categoryId').populate('productId');
