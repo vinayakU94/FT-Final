@@ -73,8 +73,37 @@ const getAllRepairRequests = async (req, res) => {
     }
 };
 
+const updateRepairRequestStatus = async (req, res) => {
+    const { id, status } = req.body;
+
+    if (!id || !status) {
+        return res.status(400).json({ error: "ID and status are required" });
+    }
+
+    try {
+        const updatedRepairRequest = await RepairRequest.findByIdAndUpdate(
+            id,
+            { status },
+            { new: true }
+        ).populate('categoryId').populate('productId');
+
+        if (!updatedRepairRequest) {
+            return res.status(400).json({
+                status: "Failed",
+                message: "Repair request not found",
+            });
+        }
+
+        res.status(200).json({ message: "Status updated successfully", body: updatedRepairRequest });
+    } catch (error) {
+        console.error("Error updating repair request status:", error);
+        res.status(500).json({ error: "Internal server error" });
+    }
+};
+
 export {
     addRepairRequest,
     getRepairRequest,
-    getAllRepairRequests
-};
+    getAllRepairRequests,
+    updateRepairRequestStatus
+};;
