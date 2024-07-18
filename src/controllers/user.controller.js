@@ -7,7 +7,7 @@ const registerUser =  async (req, res) => {
     const { name, phoneNumber, email, city, password } = req.body;
     
     if (checkNullUndefined(name) || checkNullUndefined(phoneNumber) || checkNullUndefined(email) || checkNullUndefined(city) || checkNullUndefined(password)) {
-      return res.status(400).json({ error: "invalid credentials" })
+      return res.status(400).json({ error: "invalid credentials null" })
     }
     const phoneNumberPattern = /^\d{10}$/;
     const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;

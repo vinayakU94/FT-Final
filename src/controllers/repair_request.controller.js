@@ -1,13 +1,19 @@
-import { RepairRequest } from "../models/repairRequest.model.js";
+import { RepairRequest } from "../models/RepairRequest.model.js";
 import { checkNullUndefined } from "../utils/tools.js";
-
+import {uploadOnCloudinary} from "../utils/cloudinary.js"
 const addRepairRequest = async (req, res) => {
     const { categoryId, productId, userId, pickupAddress, description, image, status } = req.body;
 
     if (checkNullUndefined(categoryId, productId, userId, pickupAddress, description)) {
         return res.status(400).json({ error: "Required fields not present" });
     }
+    const imageLocalPath = req.files?.image[0]?.path;
+    if (!imageLocalPath) {
+        return res.status(400).json({ error: "image not present" });
+    }
 
+    const imageLink = await uploadOnCloudinary(imageLocalPath)
+    console.log("image link " +  imageLink);
     try {
         const repairRequest = await RepairRequest.create({
             categoryId,
@@ -15,7 +21,7 @@ const addRepairRequest = async (req, res) => {
             userId,
             pickupAddress,
             description,
-            image,
+            image : imageLink.url,
             status
         });
 
