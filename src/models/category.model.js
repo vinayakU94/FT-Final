@@ -14,20 +14,3 @@ const categorySchema = new Schema(
 );
 
 export const Category =  model("Category", categorySchema);
-
-
-import { Schema, model } from "mongoose";
-
-const categorySchema = new Schema(
-  {
-    name: {
-      type: String,
-      required: true,
-    },
-  },
-  {
-    timestamps: true,
-  }
-);
-
-export const Category =  model("Category", categorySchema);
