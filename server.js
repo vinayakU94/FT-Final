@@ -3,11 +3,6 @@ import { MongoClient, ServerApiVersion } from 'mongodb';
 import { checkNullUndefined } from './src/utils/tools.js';
 import bcrypt from "bcrypt"
 import connectDB from './src/database/index.js';
-import dotenv from "dotenv"
-
-
-dotenv.config()
-
 const app = express();
 
 app.use(express.json({limit: "16kb"}))
@@ -27,7 +22,7 @@ app.use("/repair_request", repair_requestRouter)
 
 
 // MongoDB connection URI
-const uri = `${process.env.MONGO_URL}`;
+const uri = "mongodb+srv://uvinayak7:oRrZcoLEEOtDJqyG@clusterft.mw37dvg.mongodb.net/?retryWrites=true&w=majority&appName=ClusterFT";
 
 // Create a MongoClient with a MongoClientOptions object to set the Stable API version
 const client = new MongoClient(uri, {
