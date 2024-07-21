@@ -12,10 +12,10 @@ const port = process.env.PORT || 3000;
 
 
 
-import userRouter from './src/routes/user.routes.js'
-import categoryRouter from './src/routes/category.routes.js'
-import productRouter from './src/routes/product.routes.js'
-import repair_requestRouter from './src/routes/repair_request.routes.js'
+import userRouter from '../src/routes/user.routes.js'
+import categoryRouter from '../src/routes/category.routes.js'
+import productRouter from '../src/routes/product.routes.js'
+import repair_requestRouter from '../src/routes/repair_request.routes.js'
 
 app.use("/users", userRouter)
 app.use("/category", categoryRouter)
