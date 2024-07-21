@@ -1,8 +1,8 @@
 import express, { json, response } from 'express';
 import { MongoClient, ServerApiVersion } from 'mongodb';
-import { checkNullUndefined } from './src/utils/tools.js';
+import { checkNullUndefined } from  '../src/utils/tools.js' //'./src/utils/tools.js';
 import bcrypt from "bcrypt"
-import connectDB from './src/database/index.js';
+import connectDB from '../src/database/index.js';
 import dotenv from 'dotenv';
 
 dotenv.config();
