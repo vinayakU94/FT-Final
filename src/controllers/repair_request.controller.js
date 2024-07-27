@@ -1,13 +1,19 @@
-import { RepairRequest } from "../models/repairRequest.model.js";
+import { RepairRequest } from "../models/RepairRequest.model.js";
 import { checkNullUndefined } from "../utils/tools.js";
-
+import {uploadOnCloudinary} from "../utils/cloudinary.js"
 const addRepairRequest = async (req, res) => {
     const { categoryId, productId, userId, pickupAddress, description, image, status } = req.body;
 
     if (checkNullUndefined(categoryId, productId, userId, pickupAddress, description)) {
         return res.status(400).json({ error: "Required fields not present" });
     }
+    const imageLocalPath = req.files?.image[0]?.path;
+    if (!imageLocalPath) {
+        return res.status(400).json({ error: "image not present" });
+    }
 
+    const imageLink = await uploadOnCloudinary(imageLocalPath)
+    console.log("image link " +  imageLink);
     try {
         const repairRequest = await RepairRequest.create({
             categoryId,
@@ -15,7 +21,7 @@ const addRepairRequest = async (req, res) => {
             userId,
             pickupAddress,
             description,
-            image,
+            image : imageLink.url,
             status
         });
 
@@ -36,7 +42,7 @@ const addRepairRequest = async (req, res) => {
 };
 
 const getRepairRequest = async (req, res) => {
-    const { id } = req.body;
+    const { id } = req.params;
 
     try {
         const repairRequest = await RepairRequest.findById(id).populate('categoryId').populate('productId');
@@ -73,37 +79,8 @@ const getAllRepairRequests = async (req, res) => {
     }
 };
 
-const updateRepairRequestStatus = async (req, res) => {
-    const { id, status } = req.body;
-
-    if (!id || !status) {
-        return res.status(400).json({ error: "ID and status are required" });
-    }
-
-    try {
-        const updatedRepairRequest = await RepairRequest.findByIdAndUpdate(
-            id,
-            { status },
-            { new: true }
-        ).populate('categoryId').populate('productId');
-
-        if (!updatedRepairRequest) {
-            return res.status(400).json({
-                status: "Failed",
-                message: "Repair request not found",
-            });
-        }
-
-        res.status(200).json({ message: "Status updated successfully", body: updatedRepairRequest });
-    } catch (error) {
-        console.error("Error updating repair request status:", error);
-        res.status(500).json({ error: "Internal server error" });
-    }
-};
-
 export {
     addRepairRequest,
     getRepairRequest,
-    getAllRepairRequests,
-    updateRepairRequestStatus
-};;
+    getAllRepairRequests
+};

@@ -48,20 +48,20 @@ const getProduct = async (req, res) => {
   }
 
   try {
-    const existedCategory = await Product.findOne({
+    const existedCategory = await Category.findOne({
       $or: [{ name }],
     });
 
     if (!existedCategory) {
       return res.status(400).json({
         status: "Failed",
-        message: "Product does not Exist",
+        message: "Category does not Exist",
       });
     }
 
     res.status(201).json({ message: "ok", body: existedCategory });
   } catch (error) {
-    console.error("Error getting Product", error);
+    console.error("Error getting category", error);
     res.status(500).json({ error: "Internal server error" });
   }
 };
