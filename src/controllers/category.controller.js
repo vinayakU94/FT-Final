@@ -85,7 +85,7 @@ const getAllCategory = async (req, res) => {
     res.status(201).json({ message: "ok", body: allCategory });
   } catch (error) {
     console.error("Error getting all category", error);
-    res.status(500).json({ error: "Internal server error" });
+    res.status(500).json({ error: `Internal server error ${error}` });
   }
 };
 
