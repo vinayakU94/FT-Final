@@ -12,6 +12,9 @@ const productSchema = new Schema(
       required: true,
       ref: "Category",
     },
+    image: {
+      type: String,
+    },
   },
   {
     timestamps: true,
