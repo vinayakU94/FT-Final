@@ -1,8 +1,14 @@
 import { Category } from "../models/category.model.js";
 import { checkNullUndefined } from "../utils/tools.js";
-
+import {uploadOnCloudinary} from "../utils/cloudinary.js";
 const addCategory = async (req, res) => {
   const { name } = req.body;
+  const imageLocalPath = req.files?.image[0]?.path;
+  if (!imageLocalPath) {
+    return res.status(400).json({ error: "image not present" });
+  }
+  const imageLink = await uploadOnCloudinary(imageLocalPath)
+  console.log("image link " +  imageLink);
 
   if (checkNullUndefined(name)) {
     return res.status(400).json({ error: "invalid credentials" });
@@ -21,6 +27,7 @@ const addCategory = async (req, res) => {
     }
     const category = await Category.create({
       name,
+      image : imageLink.url
     });
     const createdCategory = await Category.findById(category._id);
 
