@@ -73,7 +73,28 @@ const getProduct = async (req, res) => {
     res.status(500).json({ error: "Internal server error" });
   }
 };
+
+
+
+const getAllProducts = async (req, res) => {
+  try {
+    const allProducts = await Category.find({});
+
+    if (!allProducts) {
+      return res.status(400).json({
+        status: "Failed",
+        message: "Product does not Exist",
+      });
+    }
+
+    res.status(201).json({ message: "ok", body: allProducts });
+  } catch (error) {
+    console.error("Error getting all Products", error);
+    res.status(500).json({ error: "Internal server error" });
+  }
+};
 export {
   addProduct,
-  getProduct
+  getProduct,
+  getAllProducts
 }
