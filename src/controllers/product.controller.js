@@ -78,7 +78,7 @@ const getProduct = async (req, res) => {
 
 const getAllProducts = async (req, res) => {
   try {
-    const allProducts = await Category.find({});
+    const allProducts = await Product.find({});
 
     if (!allProducts) {
       return res.status(400).json({
