@@ -1,8 +1,8 @@
 import express, { json, response } from 'express';
 import { MongoClient, ServerApiVersion } from 'mongodb';
-import { checkNullUndefined } from  '../src/utils/tools.js' //'./src/utils/tools.js';
+import { checkNullUndefined } from  './src/utils/tools.js' //'./src/utils/tools.js';
 import bcrypt from "bcrypt"
-import connectDB from '../src/database/index.js';
+import connectDB from './src/database/index.js';
 import dotenv from 'dotenv';
 
 dotenv.config();
@@ -12,15 +12,17 @@ const port = process.env.PORT || 3000;
 
 
 
-import userRouter from '../src/routes/user.routes.js'
-import categoryRouter from '../src/routes/category.routes.js'
-import productRouter from '../src/routes/product.routes.js'
-import repair_requestRouter from '../src/routes/repair_request.routes.js'
+import userRouter from './src/routes/user.routes.js'
+import categoryRouter from './src/routes/category.routes.js'
+import productRouter from './src/routes/product.routes.js'
+import repair_requestRouter from './src/routes/repair_request.routes.js'
+import tempRuter from './src/routes/temp.route.js'
 
 app.use("/users", userRouter)
 app.use("/category", categoryRouter)
 app.use("/product", productRouter)
 app.use("/repair_request", repair_requestRouter)
+app.use("/temp",tempRuter )
 
 
 // MongoDB connection URI
