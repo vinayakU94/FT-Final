@@ -47,7 +47,7 @@ const registerUser =  async (req, res) => {
     res.status(201).json({ message: "Product created successfully" });
   } catch (error) {
     console.error("Error creating Product:", error);
-    res.status(500).json({ error: "Internal server error" });
+    res.status(500).json({ error: `Internal server error ${error}` });
   }  }
 
 
