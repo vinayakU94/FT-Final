@@ -40,7 +40,7 @@ const addRepairRequest = async (req, res) => {
         res.status(201).json({ message: "Repair request created successfully", body: createdRepairRequest });
     } catch (error) {
         console.error("Error creating repair request:", error);
-        res.status(500).json({ error: "Internal server error" });
+        res.status(500).json({ error: `Internal server error ${error} error ` });
     }
 };
 
