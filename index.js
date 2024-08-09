@@ -4,12 +4,14 @@ import { checkNullUndefined } from  './src/utils/tools.js' //'./src/utils/tools.
 import bcrypt from "bcrypt"
 import connectDB from './src/database/index.js';
 import dotenv from 'dotenv';
+import cors from 'cors';
 
 dotenv.config();
 const app = express();
 app.use(express.json({limit: "16kb"}))
 const port = process.env.PORT || 3000;
 
+app.use(cors())
 
 
 import userRouter from './src/routes/user.routes.js'
