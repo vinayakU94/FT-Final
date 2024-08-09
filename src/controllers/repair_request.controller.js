@@ -7,6 +7,9 @@ const addRepairRequest = async (req, res) => {
     if (checkNullUndefined(categoryId, productId, userId, pickupAddress, description)) {
         return res.status(400).json({ error: "Required fields not present" });
     }
+    // console.log(req)
+    // console.log("dsf")
+    // console.log(req.files)
     const imageLocalPath = req.files?.image[0]?.path;
     if (!imageLocalPath) {
         return res.status(400).json({ error: "image not present" });
