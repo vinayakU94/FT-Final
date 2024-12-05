@@ -1,0 +1,7 @@
+node_modules
+DOCKER.dockerfile
+node_modules
+.env
+.vercel
+serviceAccountKey.json
+gaurav.pem
