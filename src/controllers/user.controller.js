@@ -7,7 +7,7 @@ const registerUser =  async (req, res) => {
     const { name, phoneNumber, email, city, password } = req.body;
     
     if (checkNullUndefined(name) || checkNullUndefined(phoneNumber) || checkNullUndefined(email) || checkNullUndefined(city) || checkNullUndefined(password)) {
-      return res.status(400).json({ error: "invalid credentials" })
+      return res.status(400).json({ error: "invalid credentials null" })
     }
     const phoneNumberPattern = /^\d{10}$/;
     const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -78,6 +78,8 @@ const registerUser =  async (req, res) => {
 
  const loginUser =  async (req, res) => {
     const { phoneNumber, password } = req.body;
+    console.log("user")
+    console.log(req.body);
 
     if(checkNullUndefined(phoneNumber) || checkNullUndefined(password)){
         return res.status(400).json({ error: "invalid credentials" });
@@ -93,7 +95,7 @@ const registerUser =  async (req, res) => {
         $or: [{phoneNumber}]
         })
       if (!user) {
-        return res.status(404).json({ error: 'User not found' });
+        return res.status(400).json({ error: 'User not found' });
       }
 
 
@@ -113,7 +115,36 @@ const registerUser =  async (req, res) => {
       res.status(500).json({ error: 'Internal server error' });
     }
   }
+  const updateUser = async (req,res) => {
+    const {userid,name, city , fcmtoken} = req.body;
+    console.log(req.body);
 
+    if(checkNullUndefined(userid)){
+      return res.status(400).json({error: "userid is required"})
+    }
+    try{
+      const user = User.findOne({
+        $or: [{"_id":userid}]
+
+        });
+
+        if (!user) {
+          return res.status(400).json({ error: 'User not found' });
+        }
+  
+        const updateFields = {}; 
+        if (name !== undefined) updateFields.name = name;
+        if (city !== undefined) updateFields.city = city;
+        if (fcmtoken !== undefined) updateFields.fcmtoken = fcmtoken;
+
+        const updateduser = await User.updateOne({ "_id":userid }, { $set: updateFields });
+        
+        res.status(200).json({ message: 'user updated successfully' , body: updateduser });
+    }catch(err){
+      console.error('Error updating in user:', err);
+      res.status(500).json({ error: 'Internal server error' });
+    }
+  }
 
 
 
@@ -128,4 +159,5 @@ const registerUser =  async (req, res) => {
 export {
     registerUser,
     loginUser,
+    updateUser
 }
